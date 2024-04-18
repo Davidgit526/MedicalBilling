@@ -1,48 +1,20 @@
-# version: '3.8'
- 
-# services:
-#   nodejs:
-#     build: 
-
-#     dockerfile: Dockerfile
-#     container_name: nodejs-container
-#     ports:
-#       - '3007:3007'
-#     depends_on:
-#       - mongodb
-#     environment:
-#       - MONGODB_URI=mongodb://mongodb:27017
- 
-#   mongodb:
-#     container_name: mongodb-container
-#     image: mongo:latest
-#     ports:
-#       - '27017:27017'
 
 version: '3.8'
- 
+
 services:
-  nodejs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: nodejs-container
+  king-23:
+    image: david-23
+    build: .
     ports:
-      - "3007:3007"
+      - '7006:3007'
     environment:
-      MONGO_URI: mongodb://mongo:27017/medicalBillingApp # Update the MongoDB URI to connect to the MongoDB service
+      - MONGODB_URI:'mongodb://mongo:27017/medicalBillingApp'
     depends_on:
-      - mongo
-    # restart: unless-stopped
- 
-  mongo:
-    container_name: mongodb-container
-    image: mongo
-    volumes:
-      - ./data:/data/db
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
     ports:
       - '27017:27017'
-    healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]  # Health check command for MongoDB
-      interval: 10s
-      retries: 5
+
+  
